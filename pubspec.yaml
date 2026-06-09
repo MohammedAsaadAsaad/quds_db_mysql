@@ -8,8 +8,8 @@ environment:
   # flutter: ">=1.17.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
+  # flutter:
+  #   sdk: flutter
   mysql_client: ^0.0.27
   quds_db_interface: ^0.0.1
   # quds_db_interface:
