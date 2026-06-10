@@ -7,3 +7,8 @@
 
 - Removed flutter as a dependency from pubspec.yaml.
 - Added homepage to pubspec.yaml.
+
+
+## 0.0.4
+
+- Replaced flutter_test with test package, and add unit tests

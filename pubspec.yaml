@@ -1,6 +1,6 @@
 name: quds_db_mysql
 description: "MySQL adapter for quds_db_interface package. Provides complete SQL implementation using mysql_client."
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/my_org/quds_db_mysql
 
 environment:
@@ -16,9 +16,10 @@ dependencies:
   #   path: ../quds_db_interface
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  # flutter_test:
+  #   sdk: flutter
   flutter_lints: ^6.0.0
+  test: ^1.30.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:quds_db_mysql/quds_db_mysql.dart';
 
 class Note extends StandardDbModel {
