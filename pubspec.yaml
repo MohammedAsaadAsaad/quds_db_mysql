@@ -1,7 +1,7 @@
 name: quds_db_mysql
 description: "MySQL adapter for quds_db_interface package. Provides complete SQL implementation using mysql_client."
-version: 0.0.4
-homepage: https://github.com/my_org/quds_db_mysql
+version: 0.0.5
+homepage: https://github.com/MohammedAsaadAsaad/quds_db_mysql
 
 environment:
   sdk: ^3.11.5

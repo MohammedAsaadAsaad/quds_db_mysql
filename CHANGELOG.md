@@ -12,3 +12,7 @@
 ## 0.0.4
 
 - Replaced flutter_test with test package, and add unit tests
+
+## 0.0.5
+
+- Add unit tests for advanced capabilities.
