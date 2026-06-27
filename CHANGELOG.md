@@ -16,3 +16,7 @@
 ## 0.0.5
 
 - Add unit tests for advanced capabilities.
+
+## 0.0.6
+
+- update project files for consistency.
