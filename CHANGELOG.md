@@ -1,3 +1,9 @@
+## 0.0.9
+
+- Add Dart-first versioned migrations via `connection.migrations`
+  (`MysqlMigrationContext` + shared `SchemaMigrationRunner`).
+- Depend on `quds_db_interface` ^0.0.5.
+
 ## 0.0.1
 
 - Initial version.

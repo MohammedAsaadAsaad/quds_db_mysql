@@ -1,11 +1,25 @@
 import 'dart:async';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:quds_db_interface/quds_db_interface.dart';
+import '../migration/mysql_migration_context.dart';
+import '../schema/mysql_schema_inspector.dart';
+import '../schema/mysql_schema_migrator.dart';
 
 class MysqlDatabaseConnection extends DatabaseConnection {
   final MySQLConnectionPool _pool;
   static final _transactionKey = Object();
   bool _isClosed = false;
+
+  @override
+  late final MysqlSchemaInspector schema = MysqlSchemaInspector(this);
+  @override
+  late final MysqlSchemaMigrator migration = MysqlSchemaMigrator(this);
+  @override
+  late final MigrationRunner migrations = SchemaMigrationRunner(
+    connection: this,
+    contextFactory: () => MysqlMigrationContext(this),
+    ensureJournalTable: MysqlMigrationContext.ensureJournalTable,
+  );
 
   MysqlDatabaseConnection(this._pool);
 

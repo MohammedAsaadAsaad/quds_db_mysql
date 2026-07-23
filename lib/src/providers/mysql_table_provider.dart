@@ -61,6 +61,29 @@ class MysqlTableProvider<T extends DbModel>
   String get tableName => _tableName;
 
   @override
+  Future<void> ensureField(FieldDefinition field, {bool safe = false}) async {
+    try {
+      await connection.migration.ensureField(tableName, field);
+    } catch (e) {
+      if (safe) {
+        // ignore: avoid_print
+        print('Migration warning ($tableName.${field.columnName}): $e');
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  @override
+  Future<void> ensureBooleanNotNull(BoolField field, {bool safe = false}) async {
+    await connection.migration.ensureBooleanNotNull(
+      tableName,
+      field,
+      safe: safe,
+    );
+  }
+
+  @override
   Future<void> initialize() async {
     final fields = _cachedModelInstance.getAllFields();
     if (fields.isEmpty) return;
@@ -71,34 +94,8 @@ class MysqlTableProvider<T extends DbModel>
 
     await connection.execute(sql);
 
-    // Check for missing columns (Auto-Migration)
-    final tableInfo = await connection.query('SHOW COLUMNS FROM $tableName');
-    final existingColumns =
-        tableInfo.map((row) => row['Field'] as String).toList();
-
     for (var field in fields) {
-      if (field.columnName != null &&
-          !existingColumns.contains(field.columnName)) {
-        await connection.execute(
-          'ALTER TABLE $tableName ADD COLUMN ${_mapToMysqlColumnDef(field)}',
-        );
-      }
-    }
-
-    // Create indices automatically
-    for (var field in fields) {
-      if (field is FieldWithValue &&
-          field.isIndexed &&
-          field.columnName != null) {
-        // MySQL does not natively support IF NOT EXISTS for CREATE INDEX, 
-        // so we catch the duplicate key exception if it's already there, or query INFORMATION_SCHEMA.
-        // We can just try to create it and catch the exception safely.
-        try {
-          await connection.execute(
-            'CREATE INDEX idx_${tableName}_${field.columnName} ON $tableName (${field.columnName})',
-          );
-        } catch (_) {}
-      }
+      await connection.migration.ensureField(tableName, field);
     }
   }
 
